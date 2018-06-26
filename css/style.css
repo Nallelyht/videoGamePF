@@ -1,0 +1,30 @@
+*{
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.container {
+  display: flex;
+  text-align: center;
+}
+div.container h1#titulo{
+  padding-top: 30px;
+  margin-top: 30px;
+  text-align: center;
+  letter-spacing: 6px;
+  font-size: 5rem !important;
+  visibility: hidden;
+}
+
+div.container button#start-btn{
+  font-size: 2rem;
+  padding: 10px 20px;
+  letter-spacing: 3px;
+  background: #fedab0;
+  border: 3px solid #784831;
+  color: #784831;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
