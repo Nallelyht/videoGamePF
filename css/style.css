@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+  color: #784831;
 }
 .container {
   display: flex;
@@ -14,17 +15,28 @@ div.container h1#titulo{
   text-align: center;
   letter-spacing: 6px;
   font-size: 5rem !important;
-  visibility: hidden;
+  margin-left: 0;
 }
-
+img{
+  vertical-align: middle;
+  margin-right: 2%;
+}
 div.container button#start-btn{
   font-size: 2rem;
   padding: 10px 20px;
   letter-spacing: 3px;
-  background: #fedab0;
+  background: #e1d096;
   border: 3px solid #784831;
-  color: #784831;
   margin-top: 40px;
   margin-bottom: 40px;
   cursor: pointer;
+  transition: 0.3s;
+}
+div.container button#start-btn:hover{
+  background: #784831;
+  border: 3px solid #e1d096;
+  color: #e1d096;
+}
+#canvas{
+  margin-left: 32%;
 }
