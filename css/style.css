@@ -2,6 +2,10 @@
     font-family: "Mine";
     src: url(../assets/font/Minecraft.ttf) format("truetype");
 }
+@font-face {
+    font-family: "Mono";
+    src: url(../assets/font/VCR_OSD_MONO_1.001.ttf) format("truetype");
+}
 *{
   margin: 0 auto;
   padding: 0;
@@ -25,16 +29,16 @@ div.container h1#titulo{
 img{
   vertical-align: middle;
   margin-right: 2%;
-  margin-top: 2%;
+  margin-top: 1%;
 }
 div.container button#start-btn{
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 10px 20px;
   letter-spacing: 3px;
   background: #e1d096;
   border: 3px solid #784831;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -44,5 +48,18 @@ div.container button#start-btn:hover{
   color: #e1d096;
 }
 #canvas{
-  margin-bottom: 5%;
+  margin-bottom: %;
+}
+.directions {
+  width: 500px;
+}
+.directions h3{
+  width: 70%;
+  font-weight: 100;
+  font-family: 'Mono';
+}
+.directions h2{
+  width: 70%;
+  font-weight: 100;
+  font-family: 'Mono';
 }
