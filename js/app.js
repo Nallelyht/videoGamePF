@@ -14,7 +14,24 @@ var images = {
   heart: 'assets/img/heart.png',
   angry: 'assets/img/angry.png'
 }
+var width = 50;
+var height = 50;
+var padding = 10;
+var offsetTop = 30;
+var offsetLeft = 30;
+var row = 7;
+var column = 3;
+var rightPressed = false;
+var leftPressed = false;
+var dx = 3;
+var dy = -3;
 
+for(c=0; c<column; c++) {
+  angrys[c] = [];
+  for(r=0; r<row; r++) {
+    angrys[c][r] = { x: 0, y: 0, status: 1 };
+  }
+}
 //Class
 class Board {
   constructor(){}
@@ -54,65 +71,102 @@ class Heart{
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
-class Angry{
-  constructor(){
-    this.width = 50;
-    this.height = 50;
-    this.padding = 10;
-    this.offsetTop = 30;
-    this.offsetLeft = 30;
-    this.row = 7;
-    this.column = 3;
-    this.image = new Image();
-    this.image.src = images.angry;
-    this.image.onload = function(){
-      this.draw();
-    }.bind(this)
-  }
-  draw() { 
-    for(var i=0; i<this.column; i++) {
-      angrys[i] = [];
-      for(var j=0; j<this.row; j++) {
-        angrys[i][j] = { x: 0, y: 0, status: 1 };
-      }
-    }
-    for(var i=0; i<this.column; i++) {
-      for(var j=0; j<this.row; j++) {
-        if(angrys[i][j].status == 1) {
-          this.x = (j*(this.width+this.padding))+this.offsetLeft;
-          this.y = (i*(this.width+this.padding))+this.offsetTop;
-          angrys[i][j].x = this.x;
-          angrys[i][j].y = this.y;
-          ctx.drawImage(this.image, this.x,this.y,this.width,this.height);
-        }
-      }
-    }
-  }
-}
 
 //Instances
 var board = new Board();
 var dohko = new Dohko();
 var heart = new Heart(dohko);
-var angry = new Angry();
+
 
 //mainFunctions
 
 function update(){
   frames++;
   ctx.clearRect(0,0,canvas.width,canvas.height);
+  drawAngrys();
   dohko.draw();
   heart.draw();
-  angry.draw();
-
+  collisionDetection();
+  move(heart, dohko);
 }
 function start(){
   interval = setInterval(update, 1000/60);
 }
 
 //aux functions
-function generateBricks(){}
-function drawBricks() {}
+function drawAngrys() {
+  for(c=0; c<column; c++) {
+    for(r=0; r<row; r++) {
+      if(angrys[c][r].status == 1) {
+        var angryX = (r*(width+padding))+offsetLeft;
+        var angryY = (c*(height+padding))+offsetTop;
+        angrys[c][r].x = angryX;
+        angrys[c][r].y = angryY;
+        var image = new Image();
+        image.src = images.angry;
+        ctx.drawImage(image, angryX,angryY,width,height);
+      }
+    }
+  }
+}
+
+function collisionDetection() {
+  for(c=0; c<column; c++) {
+    for(r=0; r<row; r++) {
+      var b = angrys[c][r];
+      if(b.status == 1) {
+        if(heart.x > b.x && heart.x < b.x+width && heart.y > b.y && heart.y < b.y+height) {
+          dy = -dy;
+          b.status = 0;
+          score++;
+          if(score == row*column) {
+            finishHim();
+          }
+        }
+      }
+    }
+  }
+  drawScore();
+}
+
+function move(heart, dohko){
+  if(heart.x + dx > canvas.width-heart.width || heart.x + dx < heart.width) {
+    dx = -dx;
+  }
+  if(heart.y + dy  < dohko.height) {
+    dy = -dy;
+  }
+
+  else if(heart.y + dy > canvas.height-dohko.height ) {
+    if(heart.x > dohko.x && heart.x < dohko.x + dohko.width) {
+      dy = -dy;
+    }
+    else {
+      lives--;
+      if(lives == 0) {
+        finishHim();
+      }
+      else {
+        heart.x = dohko.width/2 + dohko.x - heart.width/2;
+        heart.y = dohko.y - heart.height +5;
+        dx = 4;
+        dy = -4;
+        dohko.x = canvas.width/2 - dohko.width/2;;
+      }
+    }
+  }
+  if(rightPressed && dohko.x < canvas.width-dohko.width) {
+    dohko.x += 7;
+  }
+  else if(leftPressed && dohko.x > 0) {
+    dohko.x -= 7;
+  }
+
+  heart.x += dx;
+  heart.y += dy;
+  drawLives();
+}
+
 function keyDownHandler(e) {
   if(e.keyCode == 39) {
     rightPressed = true;
@@ -129,11 +183,24 @@ function keyUpHandler(e) {
     leftPressed = false;
   }
 }
-function finishHim(){}
+
+function finishHim(){
+  clearInterval(interval);
+  interval = undefined;
+}
 function restart(){}
+function drawScore() {
+  ctx.font = "16px Poppins";
+  ctx.fillStyle = "#784831";
+  ctx.fillText("Score: " + score, 8, 20);
+}
+function drawLives() {
+  ctx.font = "16px Poppins";
+  ctx.fillStyle = "#784831";
+  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+}
 
 //listeners
 addEventListener('keydown', keyDownHandler);
 addEventListener("keyup", keyUpHandler);
 btnStart.addEventListener('click', start);
-
