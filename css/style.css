@@ -1,12 +1,17 @@
+@font-face {
+    font-family: "Mine";
+    src: url(../assets/font/Minecraft.ttf) format("truetype");
+}
 *{
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Mine', sans-serif;
   color: #784831;
 }
 .container {
   display: flex;
+  align-items: center;
   text-align: center;
 }
 div.container h1#titulo{
@@ -39,5 +44,5 @@ div.container button#start-btn:hover{
   color: #e1d096;
 }
 #canvas{
-  display: flex;
+  margin-bottom: 5%;
 }

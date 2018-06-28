@@ -192,12 +192,12 @@ function restart(){}
 function drawScore() {
   ctx.font = "16px Poppins";
   ctx.fillStyle = "#784831";
-  ctx.fillText("Score: " + score, 8, 20);
+  ctx.fillText("Score: " + score, 8, 16);
 }
 function drawLives() {
   ctx.font = "16px Poppins";
   ctx.fillStyle = "#784831";
-  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+  ctx.fillText("Lives: " + lives, canvas.width - 65, 16);
 }
 
 //listeners
