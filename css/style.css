@@ -20,6 +20,7 @@ div.container h1#titulo{
 img{
   vertical-align: middle;
   margin-right: 2%;
+  margin-top: 2%;
 }
 div.container button#start-btn{
   font-size: 2rem;
@@ -38,5 +39,5 @@ div.container button#start-btn:hover{
   color: #e1d096;
 }
 #canvas{
-  margin-left: 32%;
+  display: flex;
 }
