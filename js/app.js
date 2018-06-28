@@ -239,3 +239,5 @@ function drawGameOver(){
 addEventListener('keydown', keyDownHandler);
 addEventListener("keyup", keyUpHandler);
 onePlayer.addEventListener('click', start);
+
+
