@@ -31,7 +31,7 @@ img{
   margin-right: 2%;
   margin-top: 1%;
 }
-div.container button#start-btn{
+div.container button{
   font-size: 1.5rem;
   padding: 10px 20px;
   letter-spacing: 3px;
@@ -42,7 +42,7 @@ div.container button#start-btn{
   cursor: pointer;
   transition: 0.3s;
 }
-div.container button#start-btn:hover{
+div.container button:hover{
   background: #784831;
   border: 3px solid #e1d096;
   color: #e1d096;

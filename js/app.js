@@ -1,5 +1,5 @@
 //canvas
-var btnStart = document.getElementById('start-btn');
+var onePlayer = document.getElementById('one-player');
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -26,12 +26,7 @@ var leftPressed = false;
 var dx = 3;
 var dy = -3;
 
-for(c=0; c<column; c++) {
-  angrys[c] = [];
-  for(r=0; r<row; r++) {
-    angrys[c][r] = { x: 0, y: 0, status: 1 };
-  }
-}
+
 //Class
 class Board {
   constructor(){}
@@ -90,10 +85,19 @@ function update(){
   move(heart, dohko);
 }
 function start(){
+  generateAngrys();
   interval = setInterval(update, 1000/60);
 }
 
 //aux functions
+function generateAngrys(){
+  for(c=0; c<column; c++) {
+    angrys[c] = [];
+    for(r=0; r<row; r++) {
+      angrys[c][r] = { x: 0, y: 0, status: 1 };
+    }
+  }
+}
 function drawAngrys() {
   for(c=0; c<column; c++) {
     for(r=0; r<row; r++) {
@@ -151,7 +155,7 @@ function move(heart, dohko){
         heart.y = dohko.y - heart.height +5;
         dx = 4;
         dy = -4;
-        dohko.x = canvas.width/2 - dohko.width/2;;
+        dohko.x = canvas.width/2 - dohko.width/2;
       }
     }
   }
@@ -181,26 +185,55 @@ function keyUpHandler(e) {
   }
   else if(e.keyCode == 37) {
     leftPressed = false;
+  } else if(e.keyCode == 27 && !interval){
+    console.log('hola');
+    restart();
   }
 }
 
 function finishHim(){
   clearInterval(interval);
   interval = undefined;
+  drawGameOver()
 }
-function restart(){}
+function restart(){
+  if(interval) return;
+  angrys = [];
+  frames = 0;
+  score = 0;
+  lives = 3;
+  dohko.x = canvas.width/2 - dohko.width/2;
+  heart.x = dohko.width/2 + dohko.x - heart.width/2;
+  heart.y = dohko.y - heart.height +5;
+  dx = 3;
+  dy = -3;
+
+  start();
+}
 function drawScore() {
-  ctx.font = "16px Poppins";
+  ctx.font = "16px Mono";
   ctx.fillStyle = "#784831";
   ctx.fillText("Score: " + score, 8, 16);
 }
 function drawLives() {
-  ctx.font = "16px Poppins";
+  ctx.font = "16px Mono";
   ctx.fillStyle = "#784831";
-  ctx.fillText("Lives: " + lives, canvas.width - 65, 16);
+  ctx.fillText("Lives: " + lives, canvas.width - 100, 16);
+}
+function drawGameOver(){
+  ctx.beginPath();
+  ctx.font = "70px Mono";
+  ctx.fillStyle = "#000";
+  ctx.fillText("Game Over", canvas.width/8, canvas.height/4);
+  ctx.closePath()
+  ctx.beginPath();
+  ctx.font = "30px Mono";
+  ctx.fillStyle = "#000";
+  ctx.fillText("Press 'Esc' to reset", canvas.width/8, canvas.height/2);
+  ctx.closePath()
 }
 
 //listeners
 addEventListener('keydown', keyDownHandler);
 addEventListener("keyup", keyUpHandler);
-btnStart.addEventListener('click', start);
+onePlayer.addEventListener('click', start);
