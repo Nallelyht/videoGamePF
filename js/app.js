@@ -221,10 +221,12 @@ function drawLives() {
   ctx.fillText("Lives: " + lives, canvas.width - 100, 16);
 }
 function drawGameOver(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.beginPath();
   ctx.font = "70px Mono";
   ctx.fillStyle = "#000";
-  ctx.fillText("Game Over", canvas.width/8, canvas.height/4);
+  ctx.shadowBlur = 4;
+  ctx.fillText("GAME OVER", canvas.width/8, canvas.height/4);
   ctx.closePath()
   ctx.beginPath();
   ctx.font = "30px Mono";
