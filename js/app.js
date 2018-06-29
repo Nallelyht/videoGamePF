@@ -27,6 +27,9 @@ var rightPressed = false;
 var leftPressed = false;
 var dx = 3;
 var dy = -3;
+var template = '<li> <span>__name__</span>'+ ' '+ ' <span> __score__</span><span> points</span></li>'; 
+var players = [];
+var name = '';
 
 
 //Class
@@ -82,6 +85,13 @@ class Sad{
   }
 }
 
+class Players {
+  constructor (name = 'I dont know', points = 0){
+    this.name = name;
+    this.points = points;
+  }
+}
+
 //Instances
 var board = new Board();
 var dohko = new Dohko();
@@ -98,8 +108,11 @@ function update(){
   move(heart, dohko);
 }
 function start(){
+  if(interval) return;
+  name = document.getElementById('name').value;
   generateAngrys();
   interval = setInterval(update, 1000/60);
+  document.getElementById('name').value = '';
 }
 
 //aux functions
@@ -210,6 +223,7 @@ function keyUpHandler(e) {
 function finishHim(){
   clearInterval(interval);
   interval = undefined;
+  highestScore();
 }
 function youWon(){
   var imagenSad = new Sad(ctx);
@@ -268,10 +282,38 @@ function drawGameOver(){
   imagenSad.draw(images.dohkoSad, canvas.width/3, canvas.height -200, 100);  
 }
 
+function highestScore (){
+  var finalScore = score +(lives*3);
+  var highestScore = new Players(name, finalScore);
 
+  players.push(highestScore);
+  players.sort(function (o1,o2) {
+    if (o1.points < o2.points) { //comparación lexicogŕafica
+      return 1;
+    } else if (o1.points > o2.points) {
+      return -1;
+    } 
+    return 0;
+  });
+
+  listPlayers();
+}
+
+function listPlayers (){
+  var finalTemplate = '';
+
+  players.forEach(function (player){
+    finalTemplate += template.replace('__name__', player.name).replace('__score__', player.points);
+  });
+  console.log(finalTemplate);
+  document.getElementById('scores').innerHTML= finalTemplate;
+}
 //listeners
 addEventListener('keydown', keyDownHandler);
 addEventListener("keyup", keyUpHandler);
 onePlayer.addEventListener('click', start);
+onePlayer.addEventListener('click', function (){
+  onePlayer.setAttribute('disabled', true);
+})
 
 

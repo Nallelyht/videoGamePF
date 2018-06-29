@@ -1,10 +1,10 @@
 @font-face {
-    font-family: "Mine";
-    src: url(../assets/font/Minecraft.ttf) format("truetype");
+  font-family: "Mine";
+  src: url(../assets/font/Minecraft.ttf) format("truetype");
 }
 @font-face {
-    font-family: "Mono";
-    src: url(../assets/font/VCR_OSD_MONO_1.001.ttf) format("truetype");
+  font-family: "Mono";
+  src: url(../assets/font/VCR_OSD_MONO_1.001.ttf) format("truetype");
 }
 *{
   margin: 0 auto;
@@ -58,5 +58,12 @@ div.container button:hover{
 .directions h2{
   width: 70%;
   font-weight: 100;
+  font-family: 'Mono';
+}
+ul{
+  list-style: none;
+
+}
+span{
   font-family: 'Mono';
 }

@@ -18,14 +18,18 @@
     </div>
     <div class="container">
       <div class="directions">
-        <button id="one-player">One Player</button>
-        <h3>OR</h3>
-        <button id="two-players">Two Players</button>
+        <label for="name"> Name: <input type="text" id="name"></label>
+        <br>
+        <button id="one-player" disabled>Start Game</button>
         <h2>Play using the arrows on the keyboard, left and right!! </h2>
         <br>
         <h3>
           The player with the highest score and more lifes wins
         </h3>
+        <br>
+        <br>
+        <ul id="scores">
+        </ul>
       </div>
 
       <canvas id="canvas"width="490" height="480"></canvas>
