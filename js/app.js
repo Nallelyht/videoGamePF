@@ -4,6 +4,14 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
 //constants
+var sound = new Audio();
+sound.src = "http://66.90.93.122/ost/tetris-amiga/xfkkzifemy/01_Title%20Screen.mp3";
+sound.loop = true;
+var soundOver = new Audio();
+soundOver.src = "http://66.90.93.122/ost/spy-kids-3-d-game-over/gwqgnpie/08%20-%20GAME%20OVER.mp3";
+var soundWon = new Audio();
+soundWon.src = 'http://66.90.93.122/ost/mario-bros/jowjoabq/06%20mb%20player%20restarts.mp3';
+
 var interval;
 var frames = 0;
 var score = 0;
@@ -27,7 +35,7 @@ var rightPressed = false;
 var leftPressed = false;
 var dx = 3;
 var dy = -3;
-var template = '<li> <span>__name__</span>'+ ' '+ ' <span> __score__</span><span> points</span></li>'; 
+var template = '<li> <span>__name__</span>'+ ' '+ ' <span> __score__</span><span> puntos</span></li>'; 
 var players = [];
 var name = '';
 
@@ -113,6 +121,7 @@ function start(){
   if(!name){
     alert("¿Cuál es tu nombre?")
   } else{
+    sound.play();
     generateAngrys();
     interval = setInterval(update, 1000/60);
     document.getElementById('name').value = '';
@@ -155,6 +164,8 @@ function collisionDetection() {
           score++;
           if(score == row*column) {
             score+=10;
+            soundWon.autoplay = true
+            soundWon.load();
             finishHim();
             youWon();
           }
@@ -180,6 +191,8 @@ function move(heart, dohko){
     else {
       lives--;
       if(lives == 0) {
+        soundOver.autoplay = true
+        soundOver.load();
         finishHim()
         drawGameOver()
       }
@@ -224,6 +237,8 @@ function keyUpHandler(e) {
 }
 
 function finishHim(){
+  sound.pause();
+  sound.currentTime = 0;
   clearInterval(interval);
   interval = undefined;
   highestScore();
