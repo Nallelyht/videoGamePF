@@ -1,7 +1,7 @@
 # videoGamePF
 ## HTML, CSS, JS, Canvas
 
-###Proyecto final de la primera unidad en IronHack
+### Proyecto final de la primera unidad en IronHack
 
 Juego inspirado en Dohko mi perro, el conquista el enojo con su amor :smiley:
 
