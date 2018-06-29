@@ -9,8 +9,10 @@ sound.src = "http://66.90.93.122/ost/tetris-amiga/xfkkzifemy/01_Title%20Screen.m
 sound.loop = true;
 var soundOver = new Audio();
 soundOver.src = "http://66.90.93.122/ost/spy-kids-3-d-game-over/gwqgnpie/08%20-%20GAME%20OVER.mp3";
+soundOver.loop = true;
 var soundWon = new Audio();
 soundWon.src = 'http://66.90.93.122/ost/mario-bros/jowjoabq/06%20mb%20player%20restarts.mp3';
+soundWon.loop = true;
 
 var interval;
 var frames = 0;
@@ -191,8 +193,7 @@ function move(heart, dohko){
     else {
       lives--;
       if(lives == 0) {
-        soundOver.autoplay = true
-        soundOver.load();
+        play();
         finishHim()
         drawGameOver()
       }
@@ -262,6 +263,10 @@ function youWon(){
 }
 function restart(){
   if(interval) return;
+  soundOver.pause();
+  soundOver.currentTime = 0;
+  soundWon.pause();
+  soundWon.currentTime = 0;
   angrys = [];
   frames = 0;
   score = 0;
@@ -303,7 +308,9 @@ function drawGameOver(){
   ctx.closePath();
   imagenSad.draw(images.dohkoSad, canvas.width/3, canvas.height -200, 100);  
 }
-
+function play(){
+  soundOver.play();
+}
 function highestScore (){
   var finalScore = score +(lives*3);
   var highestScore = new Players(name, finalScore);
