@@ -166,11 +166,12 @@ function move(heart, dohko){
         drawGameOver()
       }
       else {
+        dohko.x = canvas.width/2 - dohko.width/2;
         heart.x = dohko.width/2 + dohko.x - heart.width/2;
         heart.y = dohko.y - heart.height +5;
         dx = 4;
         dy = -4;
-        dohko.x = canvas.width/2 - dohko.width/2;
+
       }
     }
   }
