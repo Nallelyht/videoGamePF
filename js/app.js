@@ -12,7 +12,9 @@ var angrys = [];
 var images = {
   dohkoImg: 'assets/img/pug.png',
   heart: 'assets/img/heart.png',
-  angry: 'assets/img/angry.png'
+  angry: 'assets/img/angry.png',
+  dohkoSad: 'assets/img/dohko-sad.png',
+  cup: 'assets/img/trofeo.png',
 }
 var width = 50;
 var height = 50;
@@ -67,14 +69,25 @@ class Heart{
   }
 }
 
+class Sad{
+  construsctor(ctx){
+    this.ctx = ctx;
+  }
+  draw(image_arg, image_x, image_y) {
+    var image = new Image();
+    image.src = image_arg;
+    image.onload = function() {
+      ctx.drawImage(image, image_x, image_y, 200, 180);
+    };
+  }
+}
+
 //Instances
 var board = new Board();
 var dohko = new Dohko();
 var heart = new Heart(dohko);
 
-
 //mainFunctions
-
 function update(){
   frames++;
   ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -125,6 +138,7 @@ function collisionDetection() {
           score++;
           if(score == row*column) {
             finishHim();
+            youWon();
           }
         }
       }
@@ -148,7 +162,8 @@ function move(heart, dohko){
     else {
       lives--;
       if(lives == 0) {
-        finishHim();
+        finishHim()
+        drawGameOver()
       }
       else {
         heart.x = dohko.width/2 + dohko.x - heart.width/2;
@@ -194,7 +209,22 @@ function keyUpHandler(e) {
 function finishHim(){
   clearInterval(interval);
   interval = undefined;
-  drawGameOver()
+}
+function youWon(){
+  var imagenSad = new Sad(ctx);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.beginPath();
+  ctx.font = "70px Mono";
+  ctx.fillStyle = "#000";
+  ctx.shadowBlur = 4;
+  ctx.fillText("YOU WON", canvas.width/4, canvas.height/4);
+  ctx.closePath();
+  ctx.beginPath();
+  ctx.font = "30px Mono";
+  ctx.fillStyle = "#000";
+  ctx.fillText("Press 'Esc' to reset", canvas.width/6, canvas.height/2);
+  ctx.closePath();
+  imagenSad.draw(images.cup, canvas.width/3, canvas.height -200, 100);
 }
 function restart(){
   if(interval) return;
@@ -221,19 +251,22 @@ function drawLives() {
   ctx.fillText("Lives: " + lives, canvas.width - 100, 16);
 }
 function drawGameOver(){
+  var imagenSad = new Sad(ctx);
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.beginPath();
   ctx.font = "70px Mono";
   ctx.fillStyle = "#000";
   ctx.shadowBlur = 4;
   ctx.fillText("GAME OVER", canvas.width/8, canvas.height/4);
-  ctx.closePath()
+  ctx.closePath();
   ctx.beginPath();
   ctx.font = "30px Mono";
   ctx.fillStyle = "#000";
-  ctx.fillText("Press 'Esc' to reset", canvas.width/8, canvas.height/2);
-  ctx.closePath()
+  ctx.fillText("Press 'Esc' to reset", canvas.width/6, canvas.height/2);
+  ctx.closePath();
+  imagenSad.draw(images.dohkoSad, canvas.width/3, canvas.height -200, 100);  
 }
+
 
 //listeners
 addEventListener('keydown', keyDownHandler);
