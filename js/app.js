@@ -110,9 +110,13 @@ function update(){
 function start(){
   if(interval) return;
   name = document.getElementById('name').value;
-  generateAngrys();
-  interval = setInterval(update, 1000/60);
-  document.getElementById('name').value = '';
+  if(!name){
+    alert("¿Cuál es tu nombre?")
+  } else{
+    generateAngrys();
+    interval = setInterval(update, 1000/60);
+    document.getElementById('name').value = '';
+  }
 }
 
 //aux functions
@@ -150,6 +154,7 @@ function collisionDetection() {
           b.status = 0;
           score++;
           if(score == row*column) {
+            score+=10;
             finishHim();
             youWon();
           }
@@ -179,7 +184,6 @@ function move(heart, dohko){
         drawGameOver()
       }
       else {
-        dohko.x = canvas.width/2 - dohko.width/2;
         heart.x = dohko.width/2 + dohko.x - heart.width/2;
         heart.y = dohko.y - heart.height +5;
         dx = 4;
@@ -215,7 +219,6 @@ function keyUpHandler(e) {
   else if(e.keyCode == 37) {
     leftPressed = false;
   } else if(e.keyCode == 27 && !interval){
-    console.log('hola');
     restart();
   }
 }
@@ -301,11 +304,9 @@ function highestScore (){
 
 function listPlayers (){
   var finalTemplate = '';
-
   players.forEach(function (player){
     finalTemplate += template.replace('__name__', player.name).replace('__score__', player.points);
   });
-  console.log(finalTemplate);
   document.getElementById('scores').innerHTML= finalTemplate;
 }
 //listeners
@@ -313,7 +314,8 @@ addEventListener('keydown', keyDownHandler);
 addEventListener("keyup", keyUpHandler);
 onePlayer.addEventListener('click', start);
 onePlayer.addEventListener('click', function (){
-  onePlayer.setAttribute('disabled', true);
+  if(name){
+    onePlayer.style.display = 'none';}
 })
 
 
