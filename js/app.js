@@ -235,12 +235,13 @@ function youWon(){
   ctx.font = "70px Mono";
   ctx.fillStyle = "#000";
   ctx.shadowBlur = 4;
-  ctx.fillText("YOU WON", canvas.width/4, canvas.height/4);
+  ctx.fillText("Ganaste!", canvas.width/4, canvas.height/4);
   ctx.closePath();
   ctx.beginPath();
   ctx.font = "30px Mono";
   ctx.fillStyle = "#000";
-  ctx.fillText("Press 'Esc' to reset", canvas.width/6, canvas.height/2);
+  ctx.fillText("Presiona ESC para", 0, canvas.height/2);
+  ctx.fillText("jugar de nuevo", 0, canvas.height/2 + 30);
   ctx.closePath();
   imagenSad.draw(images.cup, canvas.width/3, canvas.height -200, 100);
 }
@@ -261,12 +262,12 @@ function restart(){
 function drawScore() {
   ctx.font = "16px Mono";
   ctx.fillStyle = "#784831";
-  ctx.fillText("Score: " + score, 8, 16);
+  ctx.fillText("Puntaje: " + score, 8, 16);
 }
 function drawLives() {
   ctx.font = "16px Mono";
   ctx.fillStyle = "#784831";
-  ctx.fillText("Lives: " + lives, canvas.width - 100, 16);
+  ctx.fillText("Vidas: " + lives, canvas.width - 100, 16);
 }
 function drawGameOver(){
   var imagenSad = new Sad(ctx);
@@ -275,12 +276,15 @@ function drawGameOver(){
   ctx.font = "70px Mono";
   ctx.fillStyle = "#000";
   ctx.shadowBlur = 4;
-  ctx.fillText("GAME OVER", canvas.width/8, canvas.height/4);
+  ctx.textAlign="left";
+  ctx.fillText("GAME OVER", 0, canvas.height/4);
   ctx.closePath();
   ctx.beginPath();
   ctx.font = "30px Mono";
   ctx.fillStyle = "#000";
-  ctx.fillText("Press 'Esc' to reset", canvas.width/6, canvas.height/2);
+  ctx.textAlign="left";
+  ctx.fillText("Presiona ESC para", 0, canvas.height/2);
+  ctx.fillText("jugar de nuevo", 0, canvas.height/2 + 30);
   ctx.closePath();
   imagenSad.draw(images.dohkoSad, canvas.width/3, canvas.height -200, 100);  
 }
